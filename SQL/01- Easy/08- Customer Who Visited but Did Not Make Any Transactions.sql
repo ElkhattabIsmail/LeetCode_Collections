@@ -41,15 +41,30 @@
 
 --Input: 
 --Visits
+
+--Explanation: 
+--Customer with id = 23 visited the mall once and made one transaction during the visit with id = 12.
+--Customer with id = 9 visited the mall once and made one transaction during the visit with id = 13.
+--Customer with id = 30 visited the mall once and did not make any transactions.
+--Customer with id = 54 visited the mall three times. During 2 visits they did not make any transactions,
+--and during one visit they made 3 transactions.
+--Customer with id = 96 visited the mall once and did not make any transactions.
+--As we can see, users with IDs 30 and 96 visited the mall one time without making any transactions. Also,
+--user 54 visited the mall twice and did not make any transactions.
+
+
+-- Solution :
+
+-- Way 01
 --+----------+-------------+
 --| visit_id | customer_id |
 --+----------+-------------+
---| 1        | 23          |
+--| 1        | 23          |  
 --| 2        | 9           |
---| 4        | 30          |
---| 5        | 54          |
---| 6        | 96          |
---| 7        | 54          |
+--| 4        | 30          | 30,96,54,54
+--| 5        | 54          | 54,30,96
+--| 6        | 96          | O2,01,01
+--| 7        | 54          | 
 --| 8        | 54          |
 --+----------+-------------+
 --Transactions
@@ -70,26 +85,14 @@
 --| 30          | 1              |
 --| 96          | 1              |
 --+-------------+----------------+
---Explanation: 
---Customer with id = 23 visited the mall once and made one transaction during the visit with id = 12.
---Customer with id = 9 visited the mall once and made one transaction during the visit with id = 13.
---Customer with id = 30 visited the mall once and did not make any transactions.
---Customer with id = 54 visited the mall three times. During 2 visits they did not make any transactions,
---and during one visit they made 3 transactions.
---Customer with id = 96 visited the mall once and did not make any transactions.
---As we can see, users with IDs 30 and 96 visited the mall one time without making any transactions. Also,
---user 54 visited the mall twice and did not make any transactions.
-
-
--- Solution :
-
--- Way 01
 
 SELECT customer_id, COUNT(*) AS count_no_trans
 FROM Visits
-WHERE visit_id NOT IN (SELECT visit_id FROM Transactions)
+WHERE visit_id NOT IN (SELECT distinct visit_id FROM Transactions)
 GROUP BY customer_id
-order by count_no_trans desc
+order by count_no_trans desc,customer_id 
+
+
 
 
 -- Way 02
