@@ -48,11 +48,11 @@ Output:
 
 select FORMAT(trans_date , 'yyyy-MM') AS month,
 country, 
-COUNT(FORMAT(trans_date , 'yyyy-MM')) AS trans_count,
+COUNT(*) AS trans_count,
 SUM(case when state = 'approved ' then 1 else 0 end) as approved_count ,
 SUM(amount) AS trans_total_amount,
 SUM(case when state = 'approved ' then amount else 0 end) AS approved_total_amount 
-FROM transactions
+FROM New_transactions
 GROUP BY country ,FORMAT(trans_date , 'yyyy-MM')
 ORDER BY month,country DESC
 
