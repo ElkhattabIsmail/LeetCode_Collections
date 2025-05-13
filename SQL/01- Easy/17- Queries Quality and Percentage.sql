@@ -65,29 +65,13 @@ Cat queries poor_ query_percentage is (1 / 3) * 100 = 33.33
 
 -- Answer:
 
- +------------+---------+-----------------------+
-| query_name | quality | poor_query_percentage |
-+------------+---------+-----------------------+
-| Dog        | 2.50    | 33.33                 |
-| Cat        | 0.66    | 33.33                 |
-+------------+---------+-----------------------+
-select query_name,
-ROUND(SUM(1.0 * rating / position)   / COUNT(query_name), 2 )  as quality ,
-ROUND(AVG(rating < 3) , 2 ) as poor_query_percentage 
-from Queries
-group by query_name
-order by query_name desc
+SELECT 
+query_name,
+ROUND(SUM(rating * 1.0 / position) / COUNT(query_name), 2) AS quality,
+ROUND(SUM(CASE WHEN rating < 3 THEN 1 ELSE 0 END) * 1.0 
+/ COUNT(query_name) * 100, 2) AS poor_query_percentage
+FROM Queries
+GROUP BY query_name
+ORDER BY query_name desc
 
-We define query quality as:
-
-The average of the ratio between query rating and its position.
-
-We also define poor query percentage as:
-
-The percentage of all queries with rating less than 3.
-
-Write a solution to find each query_name, the quality and poor_query_percentage.
-
-Both quality and poor_query_percentage should be rounded to 2 decimal places.
-
-Return the result table in any order.
+select * from Queries
