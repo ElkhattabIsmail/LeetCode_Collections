@@ -61,3 +61,15 @@ where activity_date between dateadd(day,-29,'2019-07-27') and '2019-07-27'
 and  activity_type is not null
 group by activity_date
 ORDER BY activity_date
+
+
+-- using DATEDIFF built-in function.
+select activity_date as day, count(distinct user_id) as active_users
+from Activity
+where DATEDIFF(DAY, activity_date ,'2019-07-27') between 0 and 28  -- 2019-06-28 Not included.
+and  activity_type is not null
+group by activity_date
+ORDER BY activity_date
+
+select DATEDIFF(DAY, '2019-06-28', '2019-07-27') -- output : 29 
+select dateadd(day,-29,'2019-07-27')  -- out : 2019-06-28
