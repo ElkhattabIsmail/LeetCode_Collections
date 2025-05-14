@@ -68,23 +68,3 @@ select customer_id from customer
 group by customer_id
 having count(distinct product_key ) =
 (select count(product_key ) from products)
-
-
-
-
-
-
-
-
-
-
-INSERT INTO Products (product_key) VALUES 
-(5), 
-(6);
-
-INSERT INTO Customer (customer_id, product_key) VALUES
-(1, 5),
-(2, 6),
-(3, 5),
-(3, 6),
-(1, 6);
