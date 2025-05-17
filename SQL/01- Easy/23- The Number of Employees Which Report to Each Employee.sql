@@ -2,6 +2,7 @@
 
 -- Question:
 
+/*
 +-------------+----------+
 | Column Name | Type     |
 +-------------+----------+
@@ -66,24 +67,17 @@ Output:
 | 1           | Michael | 2             | 40          |
 | 2           | Alice   | 2             | 37          |
 | 3           | Bob     | 1             | 37          |
-+-------------+---------+---------------+-------------+
++-------------+---------+---------------+-------------+ */
 
 
 -- Solution:
 
-CREATE TABLE EmployeesR (
 
-INSERT INTO EmployeesR (employee_id, name, reports_to, age) VALUES
-(1, 'Michael', NULL, 45),
-
-
-Output: 
-+-------------+---------+---------------+-------------+
-| employee_id | name    | reports_count | average_age
-
-
-select * from EmployeesR
-
+select e1.employee_id, e1.name, count(*) as reports_count ,
+Round(avg(e2.age * 1.00),0)   as average_age from Employees e1 
+inner join  Employees e2 On e1.employee_id = e2.reports_to
+group by e1.employee_id,e1.name
+order by employee_id
 
 
 
