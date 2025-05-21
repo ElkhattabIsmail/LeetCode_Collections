@@ -65,7 +65,3 @@ on p1.product_id = t1.product_id and p1.change_date = t1.Maxdate
 on P.product_id = t2.product_id
 
 
-
-
-
-
