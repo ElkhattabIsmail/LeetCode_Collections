@@ -64,7 +64,7 @@ from seat order by id
 -- 1 Doris
 -- 4 Emerson
 -- 3 Green
--- 5 khalid
+-- 5 Jeames
 
 
 
