@@ -77,7 +77,10 @@ Where PATINDEX('%[^A-Za-z0-9._-]%', T2.FirstPartOfEmail) = 0
 
 
 
-
+SELECT user_id, name, mail
+FROM UserEmails
+WHERE mail LIKE '[a-zA-Z]%@leetcode.com' 
+AND left(mail, len(mail)-13) NOT like '%[^A-Za-z0-9_.-]%' 
 
 
 
