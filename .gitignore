@@ -1,1 +1,6 @@
+
+# Ignore This File
 29- Group Sold Products By The Date.sql
+# Ignore All Files With This Extension.
+.gitignore
+*.sql
