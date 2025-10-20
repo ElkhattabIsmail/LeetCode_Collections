@@ -62,20 +62,12 @@ The output table is ordered by invalid_count, ip in descending order respectivel
 --	2) Count how many times each invalid IP appears in the logs.
 --	3) We also check for incorrect number of octets using string logic (dot count ≠ 3).
 
-WITH Ips_With_Invalid_Octets As (
-	SELECT ip
-	FROM logs
-	CROSS APPLY STRING_SPLIT(ip, '.') AS SPLIT
-	GROUP BY ip
-	HAVING SUM(CASE WHEN SPLIT.value > 255 THEN 1 ELSE 0 END) > 0 
-	OR SUM(CASE WHEN LEFT(SPLIT.value,1) = 0 THEN 1 ELSE 0 END) > 0 )
 
-	SELECT ip,
-	COUNT(*) AS invalid_count
-	FROM logs
-	WHERE ip IN (
-				SELECT * 
-				FROM Ips_With_Invalid_Octets )
-	OR LEN(ip) - LEN(REPLACE(ip, '.', '')) != 3
-	GROUP BY ip
-	ORDER BY invalid_count DESC , ip DESC
+SELECT  ip ,COUNT(DISTINCT log_id) AS invalid_count
+FROM logs
+CROSS APPLY STRING_SPLIT(ip, '.') AS SPLIT
+GROUP BY ip
+HAVING SUM(CASE WHEN SPLIT.value > 255 THEN 1 ELSE 0 END) > 0 
+OR SUM(CASE WHEN LEFT(SPLIT.value,1) = 0 THEN 1 ELSE 0 END) > 0
+OR LEN(ip) - LEN(REPLACE(ip, '.', '')) != 3
+ORDER BY invalid_count DESC , ip DESC
